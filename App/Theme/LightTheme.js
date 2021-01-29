@@ -13,6 +13,7 @@ const LightTheme = {
   tint: ThemeColor.white,
   gradient: ThemeColor.gradient,
   tab: ThemeColor.white,
+  statusBar: 'dark-content',
 };
 
 export default LightTheme;
