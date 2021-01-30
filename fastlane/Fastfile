@@ -1,0 +1,165 @@
+project_name = 'PROJECTNAME'
+
+platform :ios do |options|
+  desc 'Fetch certificates and provisioning profiles'
+  lane :certificates do
+    puts "#{ENV['MATCH_ARRAY']}"
+    arr = "#{ENV['MATCH_ARRAY']}".split(',')
+    arr.each do |match_to|
+      UI.message("Match at: #{match_to}")
+      match(app_identifier: ENV['APP_IDENTIFIER'], type: match_to, readonly: true, clone_branch_directly: true)
+    end
+  end
+
+  desc 'Send Notification to Team!'
+  private_lane :notify_slack do
+    slack(
+      message: "#{ENV['COMMIT_ENV_NAME']} ios app successfully released!",
+      channel: "#mobile-app",
+      success: true,
+      slack_url: ENV['SLACK_WEBHOOK_URL']
+    )
+  end
+
+  desc 'Build the iOS application.'
+  lane :build do |options|
+
+    APP_NAME = ENV['APP_NAME']
+    WORKSPACE_PATH = ENV['IOS_WORKSPACE_PATH']
+    PROJECT_PATH = ENV['IOS_PROJECT_PATH']
+    KEYCHAIN_NAME = "login.keychain"
+
+
+    certificates
+    cocoapods( podfile: "./ios/Podfile", use_bundle_exec: false)
+    increment_version_number(xcodeproj: ENV['IOS_PROJECT_PATH'])
+    increment_build_number(xcodeproj: ENV['IOS_PROJECT_PATH'])
+    Dir.mkdir('./output') unless Dir.exist?('./output')
+    sh('npm run bundle-ios')
+
+    puts "IOS_EXPORT_METHOD. #{ENV['IOS_EXPORT_METHOD']}"
+
+    build_app(
+      scheme: 'PROJECTNAME',
+      silent: false,
+      clean: false,
+      include_symbols: true,
+      include_bitcode: true,
+      workspace: WORKSPACE_PATH,
+      configuration: "Release",
+      output_directory: './output',
+      export_method: ENV['IOS_EXPORT_METHOD'],
+      export_options: {
+        method: ENV['IOS_EXPORT_METHOD']
+      },
+    )
+  end
+
+  desc 'Upload app to app center'
+  private_lane :upload_to_app_center do
+    appcenter_upload(
+      api_token: ENV["TEST_APPCENTER_API_TOKEN"],
+      owner_name: ENV["TEST_APPCENTER_OWNER_NAME"],
+      app_name: "APP_NAME-iOS",
+      ipa: ENV["IOS_IPA_PATH"],
+      destinations: ENV["TEST_APPCENTER_DISTRIBUTE_GROUP"],
+      release_notes: sh("cat #{ENV['TEST_APPCENTER_DISTRIBUTE_RELEASE_NOTES_PATH']}")
+    )
+  end
+
+  desc 'Ship to App Center.'
+  lane :beta do |options|
+    build(options)
+
+    upload_to_app_center
+
+    # upload_to_testflight(skip_submission: true)
+
+    version = get_version_number(xcodeproj: ENV['IOS_PROJECT_PATH'], 'target': 'PROJECTNAME')
+    build_no = get_build_number(xcodeproj: ENV['IOS_PROJECT_PATH'])
+
+    # Tag the submit
+    git_tag = "#{ENV['COMMIT_ENV_NAME']}-ios-" + version + "-" + build_no
+
+    commit_version_bump(
+      xcodeproj: ENV['IOS_PROJECT_PATH'],
+      force: true,
+      message: "Fastlane #{git_tag} ios build - Version: " + version + " - Build: " + build_no
+    )
+
+    add_git_tag(tag: git_tag)
+    push_to_git_remote
+
+    notify_slack
+
+    Dir.mkdir('../output/ipa') unless Dir.exist?('../output/ipa')
+    Dir.mkdir("../output/ipa/#{ENV['ENV_NAME']}") unless Dir.exist?("../output/ipa/#{ENV['ENV_NAME']}")
+    puts "Copying ipa... #{sh("cp ../output/PROJECTNAME.ipa ../output/ipa/#{ENV['ENV_NAME']}/#{ENV['ENV_NAME']}_#{version}_#{build_no}.ipa")}"
+  end
+end
+
+platform :android do |options|
+
+  desc 'Build the Android application.'
+  lane :build do |options|
+    increment_version_name(app_project_dir: ENV['ANDROID_PROJECT_PATH'], bump_type: 'patch')
+    increment_version_code(app_project_dir: ENV['ANDROID_PROJECT_PATH'])
+    gradle(task: 'clean', project_dir: 'android/')
+    sh('npm run bundle-android')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+  end
+
+  desc 'Upload app to app center'
+  private_lane :upload_to_app_center do
+    appcenter_upload(
+      api_token: ENV["TEST_APPCENTER_API_TOKEN"],
+      owner_name: ENV["TEST_APPCENTER_OWNER_NAME"],
+      app_name: ENV["TEST_APPCENTER_APP_NAME_ANDROID"],
+      apk: "./android/app/build/outputs/apk/release/app-release.apk",
+      destinations: ENV["TEST_APPCENTER_DISTRIBUTE_GROUP"],
+      release_notes: sh("cat #{ENV['TEST_APPCENTER_DISTRIBUTE_RELEASE_NOTES_PATH']}")
+    )
+  end
+
+  desc 'Send Notification to Team!'
+  private_lane :notify_slack do
+    slack(
+      message: "#{ENV['COMMIT_ENV_NAME']} android app successfully released!",
+      channel: "#mobile-app",
+      success: true,
+      slack_url: ENV['SLACK_WEBHOOK_URL']
+    )
+  end
+
+  desc 'Ship to App Center Beta.'
+  lane :beta do |options|
+
+    build(options)
+    upload_to_app_center
+
+    version = get_version_name(app_project_dir: ENV['ANDROID_PROJECT_PATH'])
+    build_no = get_version_code(app_project_dir: ENV['ANDROID_PROJECT_PATH'])
+
+    git_commit(
+      path: ['./android/app/build.gradle', './*'],
+      message: "#{ENV['COMMIT_ENV_NAME']} Fastlane android build - Version: " + version + " - Build: " + build_no
+    )
+
+    # Tag the submit
+    git_tag = "#{ENV['COMMIT_ENV_NAME']}-android-" + version + "-" + build_no
+    add_git_tag(tag: git_tag)
+    push_to_git_remote
+    notify_slack
+    Dir.mkdir('../output') unless Dir.exist?('../output')
+    Dir.mkdir('../output/apk') unless Dir.exist?('../output/apk')
+    Dir.mkdir("../output/apk/#{ENV['ENV_NAME']}") unless Dir.exist?("../output/apk/#{ENV['ENV_NAME']}")
+    puts "Copying latest apk... #{sh("cp .#{ENV['ANDROID_APK_PATH']} ../output/PROJECTNAME.apk")}"
+    puts "Copying apk... #{sh("cp .#{ENV['ANDROID_APK_PATH']} ../output/apk/#{ENV['ENV_NAME']}#{version}_#{build_no}.apk")}"
+  end
+
+end
+
+
+
+
+
