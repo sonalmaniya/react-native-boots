@@ -6,7 +6,7 @@ import {AppContext} from '../AppContext';
 const Stack = createStackNavigator();
 
 const SettingsStack = () => {
-  const {appTheme} = useContext(AppContext);
+  const {appTheme, translations} = useContext(AppContext);
   return (
     <Stack.Navigator
       screenOptions={({route, navigation, theme}) => ({
@@ -26,6 +26,7 @@ const SettingsStack = () => {
         name={'Settings'}
         component={Settings}
         options={{
+          title: translations.SETTINGS,
           headerShown: true,
         }}
       />

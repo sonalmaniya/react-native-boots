@@ -6,14 +6,15 @@ const LightTheme = {
   themeColor: ThemeColor.primary,
   background: ThemeColor.white,
   shadowColor: ThemeColor.black,
-  cardBackground: ThemeColor.white,
+  card: ThemeColor.lighter,
   text: ThemeColor.gray6,
-  lightText: ThemeColor.gray2,
+  lightText: ThemeColor.gray3,
   border: ThemeColor.lightGray4,
   tint: ThemeColor.white,
   gradient: ThemeColor.gradient,
   tab: ThemeColor.white,
   statusBar: 'dark-content',
+  red: 'red',
 };
 
 export default LightTheme;

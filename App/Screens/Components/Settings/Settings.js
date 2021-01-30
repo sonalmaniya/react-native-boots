@@ -1,14 +1,26 @@
 import React, {useState, useContext} from 'react';
-import {SafeAreaView, TouchableOpacity, Alert} from 'react-native';
+import {SafeAreaView, Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import CommonStyle from '../../../Theme/CommonStyle';
 import {AppContext} from '../../../AppContext';
 import {userLogout} from '../../../Actions/UserActions';
-import {SettingRow} from '../../SubComponents';
+import {SettingHeader, SettingRow} from '../../SubComponents';
+
+const LANGUAGES = [
+  {title: 'Hindi', value: 'hi'},
+  {title: 'English', value: 'en'},
+  {title: 'German', value: 'de'},
+];
 
 const Settings = (props) => {
-  const {appTheme, setAppTheme} = useContext(AppContext);
+  const {
+    appTheme,
+    setAppTheme,
+    appLanguage,
+    setAppLanguage,
+    translations,
+  } = useContext(AppContext);
   const [darkMode, setDarkMode] = useState(appTheme.type === 'dark');
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -47,19 +59,40 @@ const Settings = (props) => {
     dispatch(userLogout());
   };
 
+  const onSelectLanguage = (value) => {
+    setAppLanguage(value);
+  };
+
   return (
     <SafeAreaView
       style={[
         CommonStyle.flexContainer,
         {backgroundColor: appTheme.background},
       ]}>
+      <SettingHeader title={translations.THEME} />
       <SettingRow
         isSwitch={true}
-        title={'Dark Mode'}
+        title={translations.DARK_MODE}
         onPress={onValueChange}
         value={darkMode}
       />
-      <SettingRow title={'Log out'} onPress={logout} value={darkMode} />
+      <SettingHeader title={translations.LANGUAGE} />
+      {LANGUAGES.map((obj) => {
+        return (
+          <SettingRow
+            {...obj}
+            onPress={onSelectLanguage}
+            isSelected={appLanguage === obj.value}
+            key={obj.value}
+          />
+        );
+      })}
+      <SettingRow
+        title={translations.LOG_OUT}
+        onPress={logout}
+        value={darkMode}
+        textStyle={{color: appTheme.red}}
+      />
     </SafeAreaView>
   );
 };

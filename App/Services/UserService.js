@@ -3,9 +3,8 @@ import StorageService from '../Utils/Storage';
 import axios from 'axios';
 
 const isLoggedIn = async () => {
-  const user = await StorageService.getObject('user');
   const token = await StorageService.get('token');
-  if (!user || !token) {
+  if (!token) {
     return false;
   }
   Config.token = token;

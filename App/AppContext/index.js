@@ -39,6 +39,7 @@ export const AppContextProvider = ({children}) => {
   const setLanguage = (language) => {
     translations.setLanguage(language);
     setAppLanguage(language);
+    AsyncStorage.setItem(APP_LANGUAGE, language);
   };
 
   const initializeAppLanguage = async (languageCode = null) => {
