@@ -1,8 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import Constant from '../../Utils/Constant';
-
-const DEFAULT_SIZES = Constant.fontSize;
+import {fontSizes} from '../../Utils/Constant';
 
 const CustomText = (props) => {
   const {
@@ -18,19 +16,19 @@ const CustomText = (props) => {
   } = props;
 
   const getFontSize = () => {
-    let fontSize = size || DEFAULT_SIZES.medium;
+    let fontSize = size || fontSizes.medium;
     if (xsmall) {
-      fontSize = DEFAULT_SIZES.xsmall;
+      fontSize = fontSizes.xsmall;
     } else if (small) {
-      fontSize = DEFAULT_SIZES.small;
+      fontSize = fontSizes.small;
     } else if (large) {
-      fontSize = DEFAULT_SIZES.large;
+      fontSize = fontSizes.large;
     } else if (xxlarge) {
-      fontSize = DEFAULT_SIZES.xxlarge;
+      fontSize = fontSizes.xxlarge;
     } else if (xlarge) {
-      fontSize = DEFAULT_SIZES.xlarge;
+      fontSize = fontSizes.xlarge;
     } else if (xxxlarge) {
-      fontSize = DEFAULT_SIZES.xxxlarge;
+      fontSize = fontSizes.xxxlarge;
     }
     return {
       fontSize,

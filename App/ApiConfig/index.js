@@ -1,6 +1,8 @@
-const productionUrl = 'http://myapp.com/';
+import Config from 'react-native-config';
 
-const developmentUrl = 'http://myapp.dev.test/';
+const productionUrl = Config.API_URL;
+
+const developmentUrl = Config.API_TEST_URL;
 
 const ENVIRONMENT = {
   PROD: 'PROD',
@@ -14,7 +16,7 @@ const baseUrl =
 
 const baseUrlApi = `${baseUrl}api/`;
 
-let Config = {
+let AppConfig = {
   baseUrl,
   baseUrlApi,
   token: null,
@@ -22,4 +24,4 @@ let Config = {
   user: `${baseUrlApi}users`,
 };
 
-export default Config;
+export {AppConfig};

@@ -1,4 +1,4 @@
-import Config from '../Config';
+import {AppConfig} from '../ApiConfig';
 import StorageService from '../Utils/Storage';
 import axios from 'axios';
 
@@ -7,12 +7,12 @@ const isLoggedIn = async () => {
   if (!token) {
     return false;
   }
-  Config.token = token;
+  AppConfig.token = token;
   return true;
 };
 
 const userLogin = async (params) => {
-  const response = await axios.post(Config.login, params);
+  const response = await axios.post(AppConfig.login, params);
   return response.data;
 };
 

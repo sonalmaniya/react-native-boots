@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import Constant from '../Utils/Constant';
 
 const CommonStyle = StyleSheet.create({
   absoluteView: {

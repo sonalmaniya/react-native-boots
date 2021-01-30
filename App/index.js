@@ -6,8 +6,8 @@ import {PersistGate} from 'redux-persist/integration/react';
 import axios from 'axios';
 import Routes from './Routes';
 import NetInfo from '@react-native-community/netinfo';
-import Config from './Config';
-import Helper from './Utils/Helper';
+import {AppConfig} from './ApiConfig';
+import {configureUrl} from './Utils/Helper';
 import Storage from './Utils/Storage';
 import {AppContextProvider} from './AppContext';
 import {NoConnection} from './Screens/SubComponents';
@@ -16,7 +16,7 @@ import CommonStyle from './Theme/CommonStyle';
 axios.interceptors.request.use(
   async (config) => {
     let request = config;
-    let token = Config.token;
+    let token = AppConfig.token;
     if (!token) {
       token = await Storage.get('token');
     }
@@ -25,7 +25,7 @@ axios.interceptors.request.use(
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    request.url = Helper.configureUrl(config.url);
+    request.url = configureUrl(config.url);
     return request;
   },
   (error) => error,
@@ -36,14 +36,18 @@ const App = (props) => {
   let netInfoSubscription = null;
 
   useEffect(() => {
-    retryConnection();
-    netInfoSubscription = NetInfo.addEventListener(handleConnectivityChange);
+    manageConnection();
     return () => {
       if (netInfoSubscription) {
         netInfoSubscription();
       }
     };
   }, []);
+
+  const manageConnection = () => {
+    retryConnection();
+    netInfoSubscription = NetInfo.addEventListener(handleConnectivityChange);
+  };
 
   // Managed internet connection
   const handleConnectivityChange = (info) => {

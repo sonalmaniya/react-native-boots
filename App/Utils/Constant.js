@@ -1,14 +1,14 @@
 import {Platform, Dimensions} from 'react-native';
 
-const isIOS = Platform.OS === 'ios';
+export const isIOS = Platform.OS === 'ios';
 
-const {height, width} = Dimensions.get('window');
+export const {height, width} = Dimensions.get('window');
 
-const aspectRatio = height / width;
-const isiPad = aspectRatio < 1.6;
+export const aspectRatio = height / width;
+export const isiPad = aspectRatio < 1.6;
 
 // Custom Fonts
-const fonts = {
+export const fonts = {
   Regular: {fontFamily: 'Regular'},
   Light: {fontFamily: 'Light'},
   Medium: {fontFamily: 'Medium'},
@@ -16,7 +16,7 @@ const fonts = {
 };
 
 // Font Sizes
-const fontSize = {
+export const fontSizes = {
   xsmall: 10,
   small: 12,
   medium: 14,
@@ -24,14 +24,3 @@ const fontSize = {
   xlarge: 18,
   xxlarge: 25,
 };
-
-const Constant = {
-  fonts,
-  fontSize,
-  height,
-  width,
-  isIOS,
-  isiPad,
-};
-
-export default Constant;

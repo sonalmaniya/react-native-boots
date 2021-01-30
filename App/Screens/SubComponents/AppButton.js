@@ -9,7 +9,6 @@ import {CustomText} from '../CommonComponent';
 import {AppContext} from '../../AppContext';
 import LinearGradient from 'react-native-linear-gradient';
 import CommonStyle from '../../Theme/CommonStyle';
-import Constant from '../../Utils/Constant';
 
 const styles = StyleSheet.create({
   outer: {
