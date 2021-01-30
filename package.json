@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release-ios": "fastlane ios beta",
+    "release-android": "fastlane android beta"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
