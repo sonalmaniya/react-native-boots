@@ -1,4 +1,4 @@
-# react-native-boots
+# react-native-app-builder
 
 This project is a React Native boilerplate that can be used to kickstart a mobile application.
 
