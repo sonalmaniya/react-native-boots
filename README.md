@@ -4,6 +4,10 @@ This project is a React Native boilerplate that can be used to kickstart a mobil
 
 The boilerplate provides **an optimized architecture for building solid cross-platform mobile applications** through separation of concerns between the UI and business logic. It contains redux, saga, context, theme, localization, tabs and stack navigation.
 
+<br/>
+
+## Getting Started
+
 ```
 $ npx react-native-app-builder <ProjectName>
 
@@ -14,23 +18,64 @@ $ npx react-native run-ios
 $ npx react-native run-android
 ```
 
-### - Latest react native version
+<br/>
 
-### - Redux saga
+## Directory Structure
 
-### - Localization
+```
+root
+├── __tests__
+├── android
+├── ios
+└── App
+    └── Actions
+    |   ├── Keys
+    └── ApiConfig
+    └── AppContext
+    └── Localization
+    └── Reducers
+    |   ├──Default
+    └── Routes
+    └── Sagas
+    └── Screens
+    |    CommonComponent
+    |    Components
+    |    SubComponents
+    └── Services
+    └── Stores
+    └── Theme
+    |    Images
+    └── Utils
+├── fastlane
+├── .env
+...
+```
 
-### - Theme support (Dark / Light)
+<br/>
 
-### - Utility for validations and error messages
+## Preconfigured with
 
-### - Custom font and font size for maintain typography
+- Latest react native version
 
-### - Persist redux storage
+- Redux saga with persistReducer
 
-### - Support different env for PRODUCTION and DEVELOPMENT
+- Localization
 
-### - Auth screens (Login)
+- Theme support (Dark / Light)
+
+- Utility for validations and error messages
+
+- Custom font and font size for maintain typography
+
+- .env setup
+
+- Support different env for PRODUCTION and DEVELOPMENT
+
+- User Authemntication flow
+
+- UI for Login, Tabs and Settings
+
+<br/>
 
 ## Login UI
 
