@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import CommonStyle from '../../Theme/CommonStyle';
 import {AppContext} from '../../AppContext';
 import {CustomText} from '../CommonComponent';
-import {ButtonWithIcon} from './AppButton';
+import {ButtonComponent} from './AppButton';
 
 const styles = StyleSheet.create({
   outer: {
@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   inner: {
     width: '60%',
     borderRadius: 10,
-    alignItems: 'center',
     paddingTop: 20,
     overflow: 'hidden',
     borderWidth: 0.5,
@@ -30,8 +29,12 @@ const NoConnection = (props) => {
   const {retryConnection} = props;
   return (
     <View style={styles.outer}>
-      <View style={[styles.inner, {backgroundColor: appTheme.cardBackground}]}>
-        <CustomText large style={[{color: appTheme.text}]}>
+      <View
+        style={[
+          styles.inner,
+          {backgroundColor: appTheme.card, borderColor: appTheme.border},
+        ]}>
+        <CustomText large style={[{color: appTheme.text, textAlign: 'center'}]}>
           Oops!
         </CustomText>
         <CustomText
@@ -39,11 +42,11 @@ const NoConnection = (props) => {
           style={[styles.subTitle, {color: appTheme.lightText}]}>
           {'No Internet Connection!\n Check your connection.'}
         </CustomText>
-        <ButtonWithIcon
+        <ButtonComponent
           title={'Retry'}
           icon={'refresh'}
-          exStyle={{width: '100%'}}
           onPress={retryConnection}
+          style={{width: '100%', marginVertical: 0, borderRadius: 0}}
         />
       </View>
     </View>

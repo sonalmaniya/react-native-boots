@@ -12,8 +12,13 @@ import CommonStyle from '../../Theme/CommonStyle';
 
 const styles = StyleSheet.create({
   outer: {
-    padding: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     borderRadius: 5,
+    borderWidth: 1,
+    ...CommonStyle.center,
+    marginVertical: 5,
+    minWidth: 100,
   },
   gradientBtn: {
     height: 56,
@@ -23,19 +28,6 @@ const styles = StyleSheet.create({
     ...CommonStyle.center,
   },
 });
-
-const ButtonWithIcon = (props) => {
-  const {title, exStyle, onPress} = props;
-  const {outer} = styles;
-  const {appTheme} = useContext(AppContext);
-  return (
-    <TouchableOpacity onPress={onPress} style={exStyle && exStyle}>
-      <View style={[outer, {backgroundColor: appTheme.themeColor}]}>
-        <CustomText style={{color: appTheme.tintColor}}>{title}</CustomText>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const GradientButton = (props) => {
   const {
@@ -67,4 +59,37 @@ const GradientButton = (props) => {
   );
 };
 
-export {ButtonWithIcon, GradientButton};
+const ButtonComponent = (props) => {
+  const {
+    title,
+    onPress,
+    style,
+    border,
+    backColor,
+    textColor,
+    isProcessing,
+  } = props;
+  const {outer} = styles;
+  const {appTheme} = useContext(AppContext);
+  return (
+    <TouchableOpacity onPress={onPress} disabled={isProcessing}>
+      <View
+        style={[
+          outer,
+          {
+            backgroundColor: backColor || appTheme.themeColor,
+            borderColor: border || appTheme.border,
+          },
+          style,
+        ]}>
+        {(!isProcessing && (
+          <CustomText large style={{color: textColor || appTheme.tint}}>
+            {title}
+          </CustomText>
+        )) || <ActivityIndicator color={textColor || appTheme.tint} />}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export {GradientButton, ButtonComponent};
