@@ -8,7 +8,7 @@ import Routes from './Routes';
 import NetInfo from '@react-native-community/netinfo';
 import {AppConfig} from './ApiConfig';
 import {configureUrl} from './Utils/Helper';
-import Storage from './Utils/Storage';
+import {getItemFromStorage} from './Utils/Storage';
 import {AppContextProvider} from './AppContext';
 import {NoConnection} from './Screens/SubComponents';
 import CommonStyle from './Theme/CommonStyle';
@@ -18,7 +18,7 @@ axios.interceptors.request.use(
     let request = config;
     let token = AppConfig.token;
     if (!token) {
-      token = await Storage.get('token');
+      token = await getItemFromStorage('token');
     }
     request.headers = {
       Authorization: `Bearer ${token}`,

@@ -13,7 +13,7 @@ import {AppContext} from '../../../AppContext';
 import AppImages from '../../../Theme/AppImages';
 import {GradientButton, BottomView} from '../../SubComponents';
 import {CustomText} from '../../CommonComponent';
-import StorageService from '../../../Utils/Storage';
+import {setItemInStorage} from '../../../Utils/Storage';
 
 const styles = StyleSheet.create({
   outer: {
@@ -69,8 +69,8 @@ class Login extends Component {
     try {
       // Field Validation
       // Make api call ans store user in redux and token in Storage
-      await StorageService.set('token', 'set login token');
       this.goToNextScreen('Home');
+      await setItemInStorage('token', 'set login token');
     } catch (error) {
       this.manageProcessing(false);
     }

@@ -6,6 +6,7 @@ import CommonStyle from '../../../Theme/CommonStyle';
 import {AppContext} from '../../../AppContext';
 import {userLogout} from '../../../Actions/UserActions';
 import {SettingHeader, SettingRow} from '../../SubComponents';
+import {removeStoreItem} from '../../../Utils/Storage';
 
 const LANGUAGES = [
   {title: 'Hindi', value: 'hi'},
@@ -57,6 +58,7 @@ const Settings = (props) => {
       }),
     );
     dispatch(userLogout());
+    await removeStoreItem('token');
   };
 
   const onSelectLanguage = (value) => {

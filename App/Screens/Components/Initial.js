@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {useNavigation, CommonActions} from '@react-navigation/native';
-import UserService from '../../Services/UserService';
+import {isLoggedIn} from '../../Services/UserService';
 
 const Initial = () => {
   const navigation = useNavigation();
@@ -11,8 +11,8 @@ const Initial = () => {
   }, []);
 
   const isUserLogin = async () => {
-    const isLoggedIn = await UserService.isLoggedIn();
-    if (!isLoggedIn) {
+    const isUserLoggedIn = await isLoggedIn();
+    if (!isUserLoggedIn) {
       goToNextScreen('Login');
       return;
     }

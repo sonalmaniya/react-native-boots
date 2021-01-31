@@ -1,8 +1,8 @@
 import React, {createContext, useEffect, useState} from 'react';
 import translations, {DEFAULT_LANGUAGE} from '../Localization';
-import AsyncStorage from '@react-native-community/async-storage';
 import * as RNLocalize from 'react-native-localize';
 import {DEFAULT_THEME, Theme} from '../Theme';
+import {setItemInStorage, getItemFromStorage} from '../Utils/Storage';
 import {Appearance} from 'react-native';
 import {omit} from 'lodash';
 
@@ -39,11 +39,11 @@ export const AppContextProvider = ({children}) => {
   const setLanguage = (language) => {
     translations.setLanguage(language);
     setAppLanguage(language);
-    AsyncStorage.setItem(APP_LANGUAGE, language);
+    setItemInStorage(APP_LANGUAGE, language);
   };
 
   const initializeAppLanguage = async (languageCode = null) => {
-    const currentLanguage = await AsyncStorage.getItem(APP_LANGUAGE);
+    const currentLanguage = await getItemFromStorage(APP_LANGUAGE);
     if (!currentLanguage && !languageCode) {
       let localeCode = DEFAULT_LANGUAGE;
       const supportedLocaleCodes = translations.getAvailableLanguages();
@@ -60,7 +60,7 @@ export const AppContextProvider = ({children}) => {
     } else {
       if (languageCode) {
         setLanguage(languageCode);
-        AsyncStorage.setItem(APP_LANGUAGE, languageCode);
+        setItemInStorage(APP_LANGUAGE, languageCode);
       } else {
         setLanguage(currentLanguage);
       }
@@ -69,18 +69,18 @@ export const AppContextProvider = ({children}) => {
 
   const setTheme = (theme) => {
     setAppTheme(theme);
-    AsyncStorage.setItem(APP_THEME, theme);
+    setItemInStorage(APP_THEME, theme);
   };
 
   const initializeAppTheme = async (themeType) => {
-    const currentTheme = await AsyncStorage.getItem(APP_THEME);
+    const currentTheme = await getItemFromStorage(APP_THEME);
     if (!currentTheme && !themeType) {
       const colorScheme = Appearance.getColorScheme();
       setAppTheme((colorScheme && colorScheme) || DEFAULT_THEME);
     } else {
       if (themeType) {
         setAppTheme(themeType);
-        AsyncStorage.setItem(APP_THEME, themeType);
+        setItemInStorage(APP_THEME, themeType);
       } else {
         setAppTheme(currentTheme);
       }

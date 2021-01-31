@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-const storeData = async (key, data) => {
+export const setItemInStorage = async (key, data) => {
   try {
     return await AsyncStorage.setItem(key, data);
   } catch (error) {
@@ -8,10 +8,10 @@ const storeData = async (key, data) => {
   }
 };
 
-const retrieveData = async (key) => {
+export const getItemFromStorage = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
+    if (value) {
       return value;
     }
     return null;
@@ -20,7 +20,7 @@ const retrieveData = async (key) => {
   }
 };
 
-const removeData = async (key) => {
+export const removeStoreItem = async (key) => {
   try {
     return await AsyncStorage.removeItem(key);
   } catch (error) {
@@ -28,7 +28,7 @@ const removeData = async (key) => {
   }
 };
 
-const storeObjectData = async (key, data) => {
+export const setObjectInStore = async (key, data) => {
   try {
     return await AsyncStorage.setItem(key, JSON.stringify(data));
   } catch (error) {
@@ -36,10 +36,10 @@ const storeObjectData = async (key, data) => {
   }
 };
 
-const retrieveObjectData = async (key) => {
+export const getObjectFromStore = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
+    if (value) {
       return JSON.parse(value);
     }
     return null;
@@ -48,7 +48,7 @@ const retrieveObjectData = async (key) => {
   }
 };
 
-const multiDelete = async (keyArray) => {
+export const storeMultiDelete = async (keyArray) => {
   try {
     return await AsyncStorage.multiRemove(keyArray);
   } catch (error) {
@@ -56,22 +56,10 @@ const multiDelete = async (keyArray) => {
   }
 };
 
-const clear = async () => {
+export const clearStorage = async () => {
   try {
     return await AsyncStorage.clear();
   } catch (error) {
     return null;
   }
 };
-
-const StorageService = {
-  set: storeData,
-  setObject: storeObjectData,
-  get: retrieveData,
-  getObject: retrieveObjectData,
-  delete: removeData,
-  multiDelete,
-  clear,
-};
-
-export default StorageService;
