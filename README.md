@@ -81,7 +81,7 @@ root
 
 <img src="./Images/login.png" width="325" height="700"/>
 
-## Tab Navigator
+## Tab Navigator with Button Component
 
 <img src="./Images/tab.png" width="325" height="700"/>
 
