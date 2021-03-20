@@ -4,10 +4,6 @@ export const getUserDetail = () => ({
   type: GET_USER,
 });
 
-export const setUserDetail = () => ({
-  type: SET_USER,
-});
-
 export const userLogout = () => ({
   type: LOG_OUT,
 });

@@ -1,4 +1,4 @@
-import {AppConfig} from '../ApiConfig';
+import {ApiConfig} from '../ApiConfig';
 import {getItemFromStorage} from '../Utils/Storage';
 import axios from 'axios';
 
@@ -7,11 +7,11 @@ export const isLoggedIn = async () => {
   if (!token) {
     return false;
   }
-  AppConfig.token = token;
+  ApiConfig.token = token;
   return true;
 };
 
 export const userLogin = async (params) => {
-  const response = await axios.post(AppConfig.login, params);
+  const response = await axios.post(ApiConfig.login, params);
   return response.data;
 };

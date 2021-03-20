@@ -16,7 +16,7 @@ const baseUrl =
 
 const baseUrlApi = `${baseUrl}api/`;
 
-let AppConfig = {
+let ApiConfig = {
   baseUrl,
   baseUrlApi,
   token: null,
@@ -24,4 +24,4 @@ let AppConfig = {
   user: `${baseUrlApi}users`,
 };
 
-export {AppConfig};
+export {ApiConfig};

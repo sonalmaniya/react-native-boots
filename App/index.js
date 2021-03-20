@@ -6,7 +6,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import axios from 'axios';
 import Routes from './Routes';
 import NetInfo from '@react-native-community/netinfo';
-import {AppConfig} from './ApiConfig';
+import {ApiConfig} from './ApiConfig';
 import {configureUrl} from './Utils/Helper';
 import {getItemFromStorage} from './Utils/Storage';
 import {AppContextProvider} from './AppContext';
@@ -16,7 +16,7 @@ import CommonStyle from './Theme/CommonStyle';
 axios.interceptors.request.use(
   async (config) => {
     let request = config;
-    let token = AppConfig.token;
+    let token = ApiConfig.token;
     if (!token) {
       token = await getItemFromStorage('token');
     }
