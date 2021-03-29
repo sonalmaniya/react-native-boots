@@ -1,5 +1,3 @@
-project_name = 'PROJECTNAME'
-
 platform :ios do |options|
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
@@ -40,7 +38,7 @@ platform :ios do |options|
     puts "IOS_EXPORT_METHOD. #{ENV['IOS_EXPORT_METHOD']}"
 
     build_app(
-      scheme: 'PROJECTNAME',
+      scheme: ENV['PROJECTNAME'],
       silent: false,
       clean: false,
       include_symbols: true,
@@ -75,7 +73,7 @@ platform :ios do |options|
 
     # upload_to_testflight(skip_submission: true)
 
-    version = get_version_number(xcodeproj: ENV['IOS_PROJECT_PATH'], 'target': 'PROJECTNAME')
+    version = get_version_number(xcodeproj: ENV['IOS_PROJECT_PATH'], 'target': ENV['PROJECTNAME'])
     build_no = get_build_number(xcodeproj: ENV['IOS_PROJECT_PATH'])
 
     # Tag the submit
@@ -94,7 +92,7 @@ platform :ios do |options|
 
     Dir.mkdir('../output/ipa') unless Dir.exist?('../output/ipa')
     Dir.mkdir("../output/ipa/#{ENV['ENV_NAME']}") unless Dir.exist?("../output/ipa/#{ENV['ENV_NAME']}")
-    puts "Copying ipa... #{sh("cp ../output/PROJECTNAME.ipa ../output/ipa/#{ENV['ENV_NAME']}/#{ENV['ENV_NAME']}_#{version}_#{build_no}.ipa")}"
+    puts "Copying ipa... #{sh("cp ../output/#{ENV['PROJECTNAME']}.ipa ../output/ipa/#{ENV['ENV_NAME']}/#{ENV['ENV_NAME']}_#{version}_#{build_no}.ipa")}"
   end
 end
 
@@ -153,13 +151,8 @@ platform :android do |options|
     Dir.mkdir('../output') unless Dir.exist?('../output')
     Dir.mkdir('../output/apk') unless Dir.exist?('../output/apk')
     Dir.mkdir("../output/apk/#{ENV['ENV_NAME']}") unless Dir.exist?("../output/apk/#{ENV['ENV_NAME']}")
-    puts "Copying latest apk... #{sh("cp .#{ENV['ANDROID_APK_PATH']} ../output/PROJECTNAME.apk")}"
+    puts "Copying latest apk... #{sh("cp .#{ENV['ANDROID_APK_PATH']} ../output/#{ENV['PROJECTNAME']}.apk")}"
     puts "Copying apk... #{sh("cp .#{ENV['ANDROID_APK_PATH']} ../output/apk/#{ENV['ENV_NAME']}#{version}_#{build_no}.apk")}"
   end
 
 end
-
-
-
-
-
