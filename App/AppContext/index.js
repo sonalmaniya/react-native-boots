@@ -36,7 +36,7 @@ export const AppContextProvider = ({children}) => {
     }
   };
 
-  const setLanguage = (language) => {
+  const setLanguage = language => {
     translations.setLanguage(language);
     setAppLanguage(language);
     setItemInStorage(APP_LANGUAGE, language);
@@ -48,9 +48,9 @@ export const AppContextProvider = ({children}) => {
       let localeCode = DEFAULT_LANGUAGE;
       const supportedLocaleCodes = translations.getAvailableLanguages();
       const phoneLocaleCodes = RNLocalize.getLocales().map(
-        (locale) => locale.languageCode,
+        locale => locale.languageCode,
       );
-      phoneLocaleCodes.some((code) => {
+      phoneLocaleCodes.some(code => {
         if (supportedLocaleCodes.includes(code)) {
           localeCode = code;
           return true;
@@ -67,12 +67,12 @@ export const AppContextProvider = ({children}) => {
     }
   };
 
-  const setTheme = (theme) => {
+  const setTheme = theme => {
     setAppTheme(theme);
     setItemInStorage(APP_THEME, theme);
   };
 
-  const initializeAppTheme = async (themeType) => {
+  const initializeAppTheme = async themeType => {
     const currentTheme = await getItemFromStorage(APP_THEME);
     if (!currentTheme && !themeType) {
       const colorScheme = Appearance.getColorScheme();

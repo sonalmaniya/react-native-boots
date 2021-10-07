@@ -14,7 +14,7 @@ import {NoConnection} from './Screens/SubComponents';
 import CommonStyle from './Theme/CommonStyle';
 
 axios.interceptors.request.use(
-  async (config) => {
+  async config => {
     let request = config;
     let token = ApiConfig.token;
     if (!token) {
@@ -28,10 +28,10 @@ axios.interceptors.request.use(
     request.url = configureUrl(config.url);
     return request;
   },
-  (error) => error,
+  error => error,
 );
 
-const App = (props) => {
+const App = props => {
   const [isConnected, setIsConnected] = useState(true);
   let netInfoSubscription = null;
 
@@ -42,6 +42,7 @@ const App = (props) => {
         netInfoSubscription();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const manageConnection = () => {
@@ -50,7 +51,7 @@ const App = (props) => {
   };
 
   // Managed internet connection
-  const handleConnectivityChange = (info) => {
+  const handleConnectivityChange = info => {
     if (info.type === 'none' || !info.isConnected) {
       setIsConnected(false);
     } else {

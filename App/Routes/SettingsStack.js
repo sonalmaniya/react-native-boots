@@ -20,8 +20,8 @@ const SettingsStack = () => {
         headerStyle: {
           backgroundColor: appTheme.tab,
         },
-      })}
-      mode="screen">
+        presentation: 'card',
+      })}>
       <Stack.Screen
         name={'Settings'}
         component={Settings}

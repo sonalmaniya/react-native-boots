@@ -1,4 +1,4 @@
-import {GET_USER, LOG_OUT, SET_USER} from './Keys';
+import {GET_USER, LOG_OUT} from './Keys';
 
 export const getUserDetail = () => ({
   type: GET_USER,

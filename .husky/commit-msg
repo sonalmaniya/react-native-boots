@@ -1,0 +1,20 @@
+#!/bin/bash
+. "$(dirname "$0")/_/husky.sh"
+
+COMMIT_MSG=`cat $1`
+TEST=`head $INPUT_FILE`
+PATTERN="((Added|Removed|Deprecated|Fixed|Security|Changed): .{5}(.|\n)*|Merge)"
+echo "Checking commit message:" $COMMIT_MSG
+
+if ! [[ "$COMMIT_MSG" =~ $PATTERN ]]; then
+
+  echo "Git commit message must contain one of following keywords:
+		Added: for new features.
+		Changed: for changes in existing functionality.
+		Deprecated: or soon-to-be removed features.
+		Removed: for now removed features.
+		Fixed: for any bug fixes.
+		Security: in case of vulnerabilities.
+	Eg: ('Added: minimum five characters in message')"
+  exit 1
+fi

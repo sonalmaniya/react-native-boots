@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SettingHeader = (props) => {
+const SettingHeader = props => {
   const {appTheme} = useContext(AppContext);
   const {title} = props;
   return (
@@ -35,7 +35,7 @@ const SettingHeader = (props) => {
   );
 };
 
-const SettingRow = (props) => {
+const SettingRow = props => {
   const {appTheme} = useContext(AppContext);
   const {
     title,

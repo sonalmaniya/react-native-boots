@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {fontSizes} from '../../Utils/Constant';
 
-const CustomText = (props) => {
+const CustomText = props => {
   const {
     size,
     xsmall,

@@ -1,12 +1,23 @@
 import React, {useContext} from 'react';
-import {SafeAreaView} from 'react-native';
-import {CustomText} from '../../CommonComponent';
-import {ButtonComponent} from '../../SubComponents';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import CommonStyle from '../../../Theme/CommonStyle';
 import {AppContext} from '../../../AppContext';
 
-const Users = (props) => {
+import {CustomText} from '../../CommonComponent';
+import {ButtonComponent} from '../../SubComponents';
+
+const styles = StyleSheet.create({
+  btnTitle: {
+    marginVertical: 10,
+  },
+  btnBorder: {
+    borderRadius: 40,
+  },
+});
+
+const Users = props => {
   const {appTheme} = useContext(AppContext);
+  const {btnTitle, btnBorder} = styles;
 
   return (
     <SafeAreaView
@@ -15,14 +26,11 @@ const Users = (props) => {
         CommonStyle.center,
         {backgroundColor: appTheme.background},
       ]}>
-      <CustomText xlarge style={{color: appTheme.text, marginVertical: 10}}>
+      <CustomText xlarge style={([btnTitle], {color: appTheme.text})}>
         Button Component
       </CustomText>
-
       <ButtonComponent title={'Button'} />
-
       <ButtonComponent title={'Button'} isProcessing />
-
       <ButtonComponent
         title={'Border Button'}
         border={appTheme.themeColor}
@@ -34,7 +42,6 @@ const Users = (props) => {
         border={appTheme.red}
         textColor={appTheme.red}
         backColor={appTheme.background}
-        style={{borderRadius: 0}}
       />
       <ButtonComponent
         title={'Disabled Button'}
@@ -42,7 +49,7 @@ const Users = (props) => {
         textColor={appTheme.lightText}
         backColor={appTheme.background}
       />
-      <ButtonComponent title={'Rounded Button'} style={{borderRadius: 40}} />
+      <ButtonComponent title={'Rounded Button'} style={btnBorder} />
     </SafeAreaView>
   );
 };

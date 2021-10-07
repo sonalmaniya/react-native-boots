@@ -23,9 +23,9 @@ const App = () => {
             headerShown: true,
             cardOverlayEnabled: true,
             headerBackTitleVisible: false,
-          })}
-          mode="screen">
-          {Routes.map((route) => {
+            presentation: 'card',
+          })}>
+          {Routes.map(route => {
             return (
               <Stack.Screen
                 name={route.name}
