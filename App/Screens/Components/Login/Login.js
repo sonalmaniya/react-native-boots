@@ -26,6 +26,19 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: 'center',
   },
+  btnText: {
+    textAlign: 'right',
+    paddingVertical: 5,
+  },
+  marginTop: {
+    marginTop: 50,
+  },
+  flexDirection: {
+    flexDirection: 'row',
+  },
+  flex: {
+    flex: 1,
+  },
 });
 
 class Login extends Component {
@@ -41,7 +54,7 @@ class Login extends Component {
     };
   }
 
-  onSubmitEditing = (refName) => {
+  onSubmitEditing = refName => {
     if (this[refName]) {
       this[refName].focus();
     }
@@ -59,7 +72,7 @@ class Login extends Component {
     });
   };
 
-  manageProcessing = (isProcessing) => {
+  manageProcessing = isProcessing => {
     this.setState({
       isProcessing,
     });
@@ -76,7 +89,7 @@ class Login extends Component {
     }
   };
 
-  goToNextScreen = (page) => {
+  goToNextScreen = page => {
     const {navigation} = this.props;
     navigation.dispatch(
       CommonActions.reset({
@@ -89,9 +102,10 @@ class Login extends Component {
   render() {
     const {appTheme, translations} = this.context;
     const {email, password, isSecureTextEntry, isProcessing} = this.state;
-    const {outer, title} = styles;
+    const {outer, title, btnText, marginTop, flexDirection, flex} = styles;
+    const {input, flexContainer, center, inputIcon, inputImg} = CommonStyle;
     const inputStyle = [
-      CommonStyle.input,
+      input,
       {
         color: appTheme.text,
         borderColor: appTheme.border,
@@ -99,17 +113,14 @@ class Login extends Component {
     ];
     return (
       <SafeAreaView
-        style={[
-          CommonStyle.flexContainer,
-          {backgroundColor: appTheme.background},
-        ]}>
-        <View style={[CommonStyle.flexContainer, CommonStyle.center]}>
+        style={[flexContainer, {backgroundColor: appTheme.background}]}>
+        <View style={[flexContainer, center]}>
           <View style={outer}>
             <CustomText xxlarge style={[title, {color: appTheme.text}]}>
               {translations.SIGN_IN}
             </CustomText>
             <TextInput
-              onChangeText={(text) => this.onChangeText(text, 'email')}
+              onChangeText={text => this.onChangeText(text, 'email')}
               value={email}
               autoCapitalize={'none'}
               placeholder={'Email'}
@@ -118,28 +129,28 @@ class Login extends Component {
               underlineColorAndroid={appTheme.transparent}
               keyboardType={'email-address'}
               returnKeyType={'next'}
-              ref={(ref) => (this.refEmail = ref)}
+              ref={ref => (this.refEmail = ref)}
               onSubmitEditing={() => this.onSubmitEditing('refPassword')}
             />
-            <View style={{flexDirection: 'row'}}>
+            <View style={flexDirection}>
               <TextInput
-                onChangeText={(text) => this.onChangeText(text, 'password')}
+                onChangeText={text => this.onChangeText(text, 'password')}
                 value={password}
                 autoCapitalize={'none'}
                 placeholder={'Password'}
-                style={[inputStyle, {flex: 1}]}
+                style={[inputStyle, flex]}
                 placeholderTextColor={appTheme.lightText}
                 underlineColorAndroid={appTheme.transparent}
                 secureTextEntry={isSecureTextEntry}
                 returnKeyType={'done'}
-                ref={(ref) => (this.refPassword = ref)}
+                ref={ref => (this.refPassword = ref)}
                 onSubmitEditing={this.onLogin}
               />
               <TouchableOpacity onPress={this.onShowPassword} activeOpacity={1}>
                 <View
                   style={{
-                    ...CommonStyle.center,
-                    ...CommonStyle.inputIcon,
+                    ...center,
+                    ...inputIcon,
                     borderBottomColor: appTheme.border,
                   }}>
                   <Image
@@ -148,24 +159,19 @@ class Login extends Component {
                       (isSecureTextEntry && AppImages.passwordOpen) ||
                       AppImages.passwordClosed
                     }
-                    style={CommonStyle.inputImg}
+                    style={inputImg}
                   />
                 </View>
               </TouchableOpacity>
             </View>
-            <CustomText
-              style={{
-                color: appTheme.lightText,
-                textAlign: 'right',
-                paddingVertical: 5,
-              }}>
+            <CustomText style={[btnText, {color: appTheme.lightText}]}>
               Forgot Password?
             </CustomText>
             <GradientButton
               title={'Log in'}
               isProcessing={isProcessing}
               onPress={this.onLogin}
-              exStyle={{marginTop: 50}}
+              exStyle={marginTop}
             />
             <BottomView
               title={'Need to create an account?'}

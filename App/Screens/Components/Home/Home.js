@@ -4,7 +4,7 @@ import {CustomText} from '../../CommonComponent';
 import CommonStyle from '../../../Theme/CommonStyle';
 import {AppContext} from '../../../AppContext';
 
-const Home = (props) => {
+const Home = props => {
   const {appTheme} = useContext(AppContext);
 
   return (

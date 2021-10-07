@@ -8,6 +8,7 @@ const Initial = () => {
 
   useEffect(() => {
     isUserLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isUserLogin = async () => {
@@ -19,7 +20,7 @@ const Initial = () => {
     goToNextScreen('Home');
   };
 
-  const goToNextScreen = async (nextScreen) => {
+  const goToNextScreen = async nextScreen => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,

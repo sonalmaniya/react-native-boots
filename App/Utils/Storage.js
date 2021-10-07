@@ -8,7 +8,7 @@ export const setItemInStorage = async (key, data) => {
   }
 };
 
-export const getItemFromStorage = async (key) => {
+export const getItemFromStorage = async key => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value) {
@@ -20,7 +20,7 @@ export const getItemFromStorage = async (key) => {
   }
 };
 
-export const removeStoreItem = async (key) => {
+export const removeStoreItem = async key => {
   try {
     return await AsyncStorage.removeItem(key);
   } catch (error) {
@@ -36,7 +36,7 @@ export const setObjectInStore = async (key, data) => {
   }
 };
 
-export const getObjectFromStore = async (key) => {
+export const getObjectFromStore = async key => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value) {
@@ -48,7 +48,7 @@ export const getObjectFromStore = async (key) => {
   }
 };
 
-export const storeMultiDelete = async (keyArray) => {
+export const storeMultiDelete = async keyArray => {
   try {
     return await AsyncStorage.multiRemove(keyArray);
   } catch (error) {

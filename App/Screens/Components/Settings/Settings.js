@@ -14,14 +14,9 @@ const LANGUAGES = [
   {title: 'German', value: 'de'},
 ];
 
-const Settings = (props) => {
-  const {
-    appTheme,
-    setAppTheme,
-    appLanguage,
-    setAppLanguage,
-    translations,
-  } = useContext(AppContext);
+const Settings = props => {
+  const {appTheme, setAppTheme, appLanguage, setAppLanguage, translations} =
+    useContext(AppContext);
   const [darkMode, setDarkMode] = useState(appTheme.type === 'dark');
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -61,7 +56,7 @@ const Settings = (props) => {
     await removeStoreItem('token');
   };
 
-  const onSelectLanguage = (value) => {
+  const onSelectLanguage = value => {
     setAppLanguage(value);
   };
 
@@ -79,7 +74,7 @@ const Settings = (props) => {
         value={darkMode}
       />
       <SettingHeader title={translations.LANGUAGE} />
-      {LANGUAGES.map((obj) => {
+      {LANGUAGES.map(obj => {
         return (
           <SettingRow
             {...obj}

@@ -15,21 +15,25 @@ const TABS = [
     title: 'Home',
     icon: AppImages.home,
     screen: Home,
+    name: 'home',
   },
   {
     title: 'Search',
     icon: AppImages.search,
     screen: Search,
+    name: 'search',
   },
   {
     title: 'User',
     icon: AppImages.user,
     screen: Users,
+    name: 'user',
   },
   {
     title: 'Settings',
     icon: AppImages.settings,
     screen: SettingsStack,
+    name: 'setting',
   },
 ];
 
@@ -37,20 +41,23 @@ const AppTab = () => {
   const {appTheme} = useContext(AppContext);
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        keyboardHidesTabBar: true,
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
         gestureEnabled: false,
         headerShown: false,
-        style: {backgroundColor: appTheme.tab},
+        tabBarInactiveTintColor: appTheme.gray1,
+        tabBarStyle: {
+          backgroundColor: appTheme.tab,
+        },
       }}
       sceneContainerStyle={{
         backgroundColor: appTheme.background,
       }}>
-      {TABS.map((tab) => {
+      {TABS.map(tab => {
         return (
           <Tab.Screen
             key={tab.title}
-            name={tab.title}
+            name={tab.name}
             component={tab.screen}
             options={{
               gestureEnabled: false,

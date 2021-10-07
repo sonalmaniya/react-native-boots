@@ -22,31 +22,38 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginTop: 5,
   },
+  textAlign: {
+    textAlign: 'center',
+  },
+  btnStyle: {
+    width: '100%',
+    marginVertical: 0,
+    borderRadius: 0,
+  },
 });
 
-const NoConnection = (props) => {
+const NoConnection = props => {
   const {appTheme} = useContext(AppContext);
+  const {textAlign, btnStyle, inner, outer, subTitle} = styles;
   const {retryConnection} = props;
   return (
-    <View style={styles.outer}>
+    <View style={outer}>
       <View
         style={[
-          styles.inner,
+          inner,
           {backgroundColor: appTheme.card, borderColor: appTheme.border},
         ]}>
-        <CustomText large style={[{color: appTheme.text, textAlign: 'center'}]}>
+        <CustomText large style={[textAlign, {color: appTheme.text}]}>
           Oops!
         </CustomText>
-        <CustomText
-          large
-          style={[styles.subTitle, {color: appTheme.lightText}]}>
+        <CustomText large style={[subTitle, {color: appTheme.lightText}]}>
           {'No Internet Connection!\n Check your connection.'}
         </CustomText>
         <ButtonComponent
           title={'Retry'}
           icon={'refresh'}
           onPress={retryConnection}
-          style={{width: '100%', marginVertical: 0, borderRadius: 0}}
+          style={btnStyle}
         />
       </View>
     </View>

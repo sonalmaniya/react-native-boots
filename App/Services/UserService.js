@@ -11,7 +11,7 @@ export const isLoggedIn = async () => {
   return true;
 };
 
-export const userLogin = async (params) => {
+export const userLogin = async params => {
   const response = await axios.post(ApiConfig.login, params);
   return response.data;
 };

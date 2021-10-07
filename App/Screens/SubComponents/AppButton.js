@@ -27,9 +27,12 @@ const styles = StyleSheet.create({
     minWidth: 160,
     ...CommonStyle.center,
   },
+  alignSelf: {
+    alignSelf: 'center',
+  },
 });
 
-const GradientButton = (props) => {
+const GradientButton = props => {
   const {
     title,
     onPress,
@@ -38,12 +41,13 @@ const GradientButton = (props) => {
     textOnly = false,
   } = props;
   const {appTheme} = useContext(AppContext);
-  const {gradientBtn} = styles;
+  const {gradientBtn, alignSelf} = styles;
   return (
     <View
       style={[
         CommonStyle.shadow,
-        {alignSelf: 'center', opacity: (isProcessing && 0.6) || 1},
+        alignSelf,
+        {opacity: (isProcessing && 0.6) || 1},
         exStyle && exStyle,
       ]}>
       <TouchableOpacity onPress={onPress} disabled={isProcessing}>
@@ -59,16 +63,9 @@ const GradientButton = (props) => {
   );
 };
 
-const ButtonComponent = (props) => {
-  const {
-    title,
-    onPress,
-    style,
-    border,
-    backColor,
-    textColor,
-    isProcessing,
-  } = props;
+const ButtonComponent = props => {
+  const {title, onPress, style, border, backColor, textColor, isProcessing} =
+    props;
   const {outer} = styles;
   const {appTheme} = useContext(AppContext);
   return (
