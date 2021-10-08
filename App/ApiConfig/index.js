@@ -9,7 +9,7 @@ const ENVIRONMENT = {
   DEV: 'DEV',
 };
 
-const currentEnv = ENVIRONMENT.DEV;
+const currentEnv = ENVIRONMENT.PROD;
 
 const baseUrl =
   (currentEnv === ENVIRONMENT.PROD && productionUrl) || developmentUrl;

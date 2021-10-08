@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import CommonStyle from '../../../Theme/CommonStyle';
 import {AppContext} from '../../../AppContext';
-
 import {CustomText} from '../../CommonComponent';
 import {ButtonComponent} from '../../SubComponents';
 
