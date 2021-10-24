@@ -67,7 +67,7 @@ root
 
 - Custom font and font size for maintain typography
 
-- .env setup
+- .env and fastlane setup
 
 - Support different env for PRODUCTION and DEVELOPMENT
 
